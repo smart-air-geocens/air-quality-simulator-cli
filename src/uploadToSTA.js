@@ -4,6 +4,7 @@ module.exports = function uploadToSTA(sampleJson) {
     const username = process.env.USER_NAME;
     const password = process.env.PASSWORD;
     let basicAuth = 'Basic ' + Buffer.from(username + ':' + password).toString('base64');
+
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': basicAuth
