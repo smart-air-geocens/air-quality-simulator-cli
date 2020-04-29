@@ -1,12 +1,14 @@
+
+
 module.exports = function randomWalk(knownSensors,walkingStep) {
-    for(let i = 0 ; i < knownSensors.features.length; i++){
-        let value = knownSensors.features[i].properties.pm25
+
+    knownSensors.features.map(sensor => {
+        let value = sensor.properties.pm25
         if(value == null){
             value = categoryPredictor();
         }
-        knownSensors.features[i].properties.pm25 = randomWalkUpdator(value,walkingStep)
-    }
-
+        sensor.properties.pm25 = randomWalkUpdator(value,walkingStep)
+    })
     return knownSensors
 }
 

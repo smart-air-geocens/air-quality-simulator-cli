@@ -1,21 +1,21 @@
 #!/usr/bin/env node
-
-let knownSensorsOriginal = require('../data/knownSensors')
-let unknownSensorsOriginal = require('../data/unknownSensors')
-let randomWalk = require('../src/randomWalk')
-let idwCalculator = require('../src/idwCalculator')
-let jsonUpdator = require('../src/jsonUpdator')
-let uploadToSTA = require('../src/uploadToSTA')
-
+const knownSensorsOriginal = require('../data/knownSensors')
+const unknownSensorsOriginal = require('../data/unknownSensors')
+const randomWalk = require('../src/randomWalk')
+const idwCalculator = require('../src/idwCalculator')
+const jsonUpdator = require('../src/jsonUpdator')
+const uploadToSTA = require('../src/uploadToSTA')
 const prompt = require('prompt-sync')();
+const yargs = require("yargs");
+const readData = require('../src/dataReader');
 require('dotenv').config()
 
-// Reading geoJSON files
-let readData = require('../src/dataReader');
-let knownSensors = readData("knownSensors", knownSensorsOriginal)
-let unknownSensors = readData("AirQ:", unknownSensorsOriginal)
 
-const yargs = require("yargs");
+// Reading geoJSON files
+let knownSensors = readData(knownSensorsOriginal)
+let unknownSensors = readData(unknownSensorsOriginal)
+
+
 const options = yargs
     .usage("Usage: -n <name>")
     // .option("n", { alias: "name", describe: "Your name", type: "string", demandOption: true })
@@ -54,16 +54,17 @@ setInterval( function () {
 
     knownSensors =  randomWalk(knownSensors, options.walkingStep)
     unknownSensors = idwCalculator(unknownSensors,knownSensors)
-    for(let i = 0 ; i < unknownSensors.features.length ; i ++){
-        let parameter = {
-            "ThingName": unknownSensors.features[i].properties.name,
-            "ThingDescription": "The outdoor " + unknownSensors.features[i].properties.name + " is a synthetic sensor for measuring PM2.5",
-            "location": unknownSensors.features[i].geometry.coordinates,
-            "pm25": unknownSensors.features[i].properties.pm25
-        }
-        let updatedJson = jsonUpdator(parameter)
-        uploadToSTA(updatedJson)
-    }
+
+    unknownSensors.features.map(sensor => {
+            let parameter = {
+                "ThingName": "Station " + sensor.properties.name,
+                "ThingDescription": "The outdoor station " + sensor.properties.name + " is a synthetic station to report PM2.5",
+                "location": sensor.geometry.coordinates,
+                "pm25": sensor.properties.pm25
+            }
+            let updatedJson = jsonUpdator(parameter)
+            uploadToSTA(updatedJson)
+    })
 
 }, options.walkingStep * 1000);
 
