@@ -6,7 +6,7 @@ To install the simulator Node CLI application:
 
 1. Clone the project into your local machine;
 2. Open Command Prompt window in the folder you have cloned the project;
-3. Run the this command: `npm install -g .`
+3. Run this command: `npm install -g .`
 
 ## Run the Simulator
 
