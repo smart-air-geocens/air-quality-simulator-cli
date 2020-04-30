@@ -23,6 +23,32 @@ const options = yargs
     .option("t", {alias: "timeInterval", describe: "time interval based on second", type: "number", default: 1})
     .argv;
 
+// Prompt user to input required information in console.
+console.log("Please input required information in command line.");
+
+process.env.USER_NAME = prompt('Username: ');
+while (!process.env.USER_NAME){
+    nullInfo("username")
+    process.env.USER_NAME = prompt('Username: ');
+}
+
+process.env.PASSWORD = prompt('Password: ',{echo: '*'})
+while (!process.env.PASSWORD){
+    nullInfo("password")
+    process.env.PASSWORD = prompt('Password: ');
+}
+
+process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
+while (!process.env.STA_ENDPOINT){
+    nullInfo("STA-Endpoint")
+    process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
+}
+
+
+function nullInfo(varName) {
+    console.log(varName + " is required and cannot be null");
+}
+
 
 setInterval( function () {
 
@@ -41,31 +67,7 @@ setInterval( function () {
 
 }, options.walkingStep * 1000);
 
-// // Prompt user to input required information in console.
-// console.log("Please input required information in command line.");
-//
-// let username = prompt('Username: ');
-// if (!username){
-//     nullInfo("username")
-//     username = prompt('Username: ');
-// }
-//
-// let password = prompt('Password: ')
-// if (!password){
-//     nullInfo("password")
-//     username = prompt('Password: ');
-// }
-//
-// let endpoint = prompt('STA-Endpoint: ')
-// if (!password){
-//     nullInfo("STA-Endpoint")
-//     endpoint = prompt('STA-Endpoint: ');
-// }
-//
-//
-// function nullInfo(varName) {
-//     console.log(varName + " is required and cannot be null");
-// }
+
 
 
 
