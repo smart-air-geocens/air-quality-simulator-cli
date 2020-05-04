@@ -1,10 +1,11 @@
-module.exports = function dataReader(type,data) {
-    for (let i =0 ; i< data.features.length; i++){
-        data.features[i].properties = {
-            "id": i,
-            "name": type + i,
+module.exports = function dataReader(data) {
+
+    data.features.map((sensor,index) => {
+        sensor.properties = {
+            "id": index,
+            "name":sensor.properties.name,
             "pm25":null
         }
-    }
+    })
     return data;
 }

@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors0"
       },
       "geometry": {
         "type": "Point",
@@ -17,7 +17,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors1"
       },
       "geometry": {
         "type": "Point",
@@ -30,7 +30,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors2"
       },
       "geometry": {
         "type": "Point",
@@ -43,7 +43,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors3"
       },
       "geometry": {
         "type": "Point",
@@ -56,7 +56,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors4"
       },
       "geometry": {
         "type": "Point",
@@ -69,7 +69,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors5"
       },
       "geometry": {
         "type": "Point",
@@ -82,7 +82,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors6"
       },
       "geometry": {
         "type": "Point",
@@ -95,7 +95,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors7"
       },
       "geometry": {
         "type": "Point",
@@ -108,7 +108,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors8"
       },
       "geometry": {
         "type": "Point",
@@ -121,7 +121,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors9"
       },
       "geometry": {
         "type": "Point",
@@ -134,7 +134,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors10"
       },
       "geometry": {
         "type": "Point",
@@ -147,7 +147,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors11"
       },
       "geometry": {
         "type": "Point",
@@ -160,7 +160,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors12"
       },
       "geometry": {
         "type": "Point",
@@ -173,7 +173,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors13"
       },
       "geometry": {
         "type": "Point",
@@ -186,7 +186,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors14"
       },
       "geometry": {
         "type": "Point",
@@ -199,7 +199,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors15"
       },
       "geometry": {
         "type": "Point",
@@ -212,7 +212,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors16"
       },
       "geometry": {
         "type": "Point",
@@ -225,7 +225,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors17"
       },
       "geometry": {
         "type": "Point",
@@ -238,7 +238,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors18"
       },
       "geometry": {
         "type": "Point",
@@ -251,7 +251,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors19"
       },
       "geometry": {
         "type": "Point",
@@ -264,7 +264,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors20"
       },
       "geometry": {
         "type": "Point",
@@ -277,7 +277,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors21"
       },
       "geometry": {
         "type": "Point",
@@ -290,7 +290,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors22"
       },
       "geometry": {
         "type": "Point",
@@ -303,7 +303,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors23"
       },
       "geometry": {
         "type": "Point",
@@ -316,7 +316,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors24"
       },
       "geometry": {
         "type": "Point",
@@ -329,7 +329,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"knownSensors25"
       },
       "geometry": {
         "type": "Point",

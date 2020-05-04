@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"Bugang-myeon"
       },
       "geometry": {
         "type": "Point",
@@ -17,7 +17,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"Sinheung-dong"
       },
       "geometry": {
         "type": "Point",
@@ -30,7 +30,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"Areum-dong"
       },
       "geometry": {
         "type": "Point",
@@ -43,7 +43,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"Hansol-dong"
       },
       "geometry": {
         "type": "Point",
@@ -56,7 +56,7 @@
     {
       "type": "Feature",
       "properties": {
-
+        "name":"Osong-eup"
       },
       "geometry": {
         "type": "Point",

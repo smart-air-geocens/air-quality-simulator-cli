@@ -1,20 +1,5 @@
 module.exports = function jsonUpdator(newObservations) {
-    let koreanThingName;
-    if(newObservations.ThingName === "AirQ:0"){
-        koreanThingName = "Bugang-myeon"
-    }
-    else if (newObservations.ThingName === "AirQ:1"){
-        koreanThingName = "Sinheung-dong"
-    }
-    else if (newObservations.ThingName === "AirQ:2"){
-        koreanThingName = "Areum-dong"
-    }
-    else if (newObservations.ThingName === "AirQ:3"){
-        koreanThingName = "Hansol-dong"
-    }
-    else if (newObservations.ThingName === "AirQ:4"){
-        koreanThingName = "Osong-eup"
-    }
+
     let templateJson = {
         "common": {
             "Datastream": {
@@ -22,7 +7,7 @@ module.exports = function jsonUpdator(newObservations) {
                     "name": null,
                     "description": null,
                     "properties": {
-                        "city": koreanThingName + ", Sejong City, South Korea",
+                        "city": newObservations.ThingName + ", Sejong City, South Korea",
                     },
                     "Locations": [{
                         "name": "",
@@ -39,13 +24,13 @@ module.exports = function jsonUpdator(newObservations) {
     };
 
     if (newObservations.ThingName != null){
-        templateJson.common.Datastream.Thing.name = koreanThingName;
-        templateJson.common.Datastream.Thing.description = "Sensing station located in " + koreanThingName + ", Sejong City, South Korea";
+        templateJson.common.Datastream.Thing.name = newObservations.ThingName;
+        templateJson.common.Datastream.Thing.description = newObservations.ThingDescription;
     };
 
     if (newObservations.location != null){
-        templateJson.common.Datastream.Thing.Locations[0].name = koreanThingName;
-        templateJson.common.Datastream.Thing.Locations[0].description = "The location of sensing station located in" + koreanThingName + ", Sejong City, South Korea";
+        templateJson.common.Datastream.Thing.Locations[0].name = newObservations.ThingName;
+        templateJson.common.Datastream.Thing.Locations[0].description = "The location of sensing station located in" + newObservations.ThingName + ", Sejong City, South Korea";
         templateJson.common.Datastream.Thing.Locations[0].location.coordinates[0] = newObservations.location[0];
         templateJson.common.Datastream.Thing.Locations[0].location.coordinates[1] = newObservations.location[1];
     };
@@ -56,10 +41,10 @@ module.exports = function jsonUpdator(newObservations) {
             {
                 "result": newObservations.pm25,
                 "Datastream": {
-                    "name": koreanThingName + " "+ newObservations.ThingName + ":PM2.5",
-                    "description":koreanThingName + " "+ newObservations.ThingName + ":PM2.5",
+                    "name": newObservations.ThingName + ":PM2.5",
+                    "description": "The PM2.5 Datastream for station "+ newObservations.ThingName,
                     "Sensor": {
-                        "name": koreanThingName + ":PM2.5",
+                        "name": newObservations.ThingName + ":PM2.5",
                         "encodingType": "text/html",
                         "metadata":"https://en.wikipedia.org/wiki/Inverse_distance_weighting",
                         "description":"This is a synthetic sensor that its observation is calculated based on IDW method from other known sensors"
@@ -79,7 +64,7 @@ module.exports = function jsonUpdator(newObservations) {
                 "FeatureOfInterest": {
                     "encodingType": "application/vnd.geo+json",
                     "description": "Generated using location provided by aqicn.org for the city of Sejong",
-                    "name": "Air Quality Station - "+koreanThingName+", Sejong, South Korea",
+                    "name": "Air Quality Station - " + newObservations.ThingName + ", Sejong, South Korea",
                     "feature": {
                         "type": "Point",
                         "coordinates": [ newObservations.location[0], newObservations.location[1] ]
