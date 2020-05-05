@@ -6,7 +6,7 @@ To install the simulator Node CLI application:
 
 1. Clone the project into your local machine;
 2. Open Command Prompt window in the folder you have cloned the project;
-3. Run the this command: `npm install -g .`
+3. Run this command: `npm install -g .`
 
 ## Run the Simulator
 
@@ -28,9 +28,15 @@ You can also set both options together by running this command:
 
 Running the simulator requires the following information:
 
-1. Username (like: `main`);
-2. Password (like: `xxx`);
-3. The URL of OGC SensorThings API endpoint (like: `https://scratchpad.sensorup.com/OGCSensorThings/v1.0`); 
+1. The URL of OGC SensorThings API endpoint (like: `https://scratchpad.sensorup.com/OGCSensorThings/v1.0`); 
+2. Username (like: `main`);
+3. Password (like: `xxx`);
 
-Please note that all required information should be entered by the user and they cannot be left empty. 
+Please note that all the required information should be entered by the user and they cannot be left empty. 
+
+## Stop the Simulator
+
+You can terminate the simulator by running this command:
+
+`Ctrl + c`
 

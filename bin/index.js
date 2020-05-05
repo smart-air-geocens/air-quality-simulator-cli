@@ -26,6 +26,12 @@ const options = yargs
 // Prompt user to input required information in console.
 console.log("Please input required information in command line.");
 
+process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
+while (!process.env.STA_ENDPOINT){
+    nullInfo("STA-Endpoint")
+    process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
+}
+
 process.env.USER_NAME = prompt('Username: ');
 while (!process.env.USER_NAME){
     nullInfo("username")
@@ -38,32 +44,27 @@ while (!process.env.PASSWORD){
     process.env.PASSWORD = prompt('Password: ');
 }
 
-process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
-while (!process.env.STA_ENDPOINT){
-    nullInfo("STA-Endpoint")
-    process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
-}
-
 
 function nullInfo(varName) {
     console.log(varName + " is required and cannot be null");
 }
 
 
-setInterval( function () {
+setInterval(function () {
 
-    knownSensors =  randomWalk(knownSensors, options.walkingStep)
-    unknownSensors = idwCalculator(unknownSensors,knownSensors)
+    knownSensors = randomWalk(knownSensors, options.walkingStep)
+    unknownSensors = idwCalculator(unknownSensors, knownSensors)
 
-    unknownSensors.features.map(sensor => {
-            let parameter = {
-                "ThingName": "Station " + sensor.properties.name,
-                "ThingDescription": "The outdoor station " + sensor.properties.name + " is a synthetic station to report PM2.5",
-                "location": sensor.geometry.coordinates,
-                "pm25": sensor.properties.pm25
-            }
-            let updatedJson = jsonUpdator(parameter)
-            uploadToSTA(updatedJson)
+    const unknownSensorsParameters = unknownSensors.features.map(sensor => {
+        const parameter = {
+            "ThingName": "Station " + sensor.properties.name,
+            "ThingDescription": "The outdoor station " + sensor.properties.name + " is a synthetic station to report PM2.5",
+            "location": sensor.geometry.coordinates,
+            "pm25": sensor.properties.pm25
+        }
+        const updatedJson = jsonUpdator(parameter)
+        uploadToSTA(updatedJson)
+        return null
     })
 
 }, options.walkingStep * 1000);
