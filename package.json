@@ -10,11 +10,12 @@
   "author": "Soroush Ojagh",
   "license": "MIT",
   "bin": {
-    "air-quality-simulator": "./bin/index.js"
+    "a": "./bin/index.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
+    "moment": "^2.25.3",
     "prompt-sync": "^4.2.0",
     "yargs": "^13.2.4"
   }
