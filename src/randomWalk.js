@@ -1,59 +1,21 @@
+// This function will receive a json file including initial value for the pm25 observation
+// It returns an updated json file based on using random walk technique
 
+module.exports = function randomWalk(inputJSON,walkingStep) {
 
-module.exports = function randomWalk(knownSensors,walkingStep) {
-
-    knownSensors.features.map(sensor => {
-        let value = sensor.properties.pm25
-        if(value == null){
-            value = categoryPredictor();
+    let outputJSON = {...inputJSON}
+    const updatedPm25 = inputJSON.targetStations.map( station => {
+        if(station.pm25Latest){
+            const pm25Value = randomWalkUpdator(station.pm25Latest,walkingStep)
+            return {...station, 'pm25Latest':pm25Value}
+        }else{
+            const pm25Value = randomWalkUpdator(station.initialObservation,walkingStep)
+            return {...station, 'pm25Latest':pm25Value}
         }
-        sensor.properties.pm25 = randomWalkUpdator(value,walkingStep)
+
     })
-    return knownSensors
-}
+    return {...inputJSON,"targetStations":updatedPm25}
 
-// if the first parameter is null, it will assign each point to a category
-function categoryPredictor() {
-    let max;
-    let min;
-    let randomCategory;
-    let randomValue;
-
-    randomCategory = Math.floor(Math.random() * 6) + 1;
-    switch (randomCategory) {
-        case 1:{
-            min = 0;
-            max = 50;
-            break
-        }
-        case 2:{
-            min = 50;
-            max = 100;
-            break
-        }
-        case 3:{
-            min = 100;
-            max = 150;
-            break
-        }
-        case 4:{
-            min = 150;
-            max = 200;
-            break
-        }
-        case 5:{
-            min = 200;
-            max = 300;
-            break
-        }
-        default:{
-            min = 300;
-            max = 500;
-            break
-        }
-    }
-    randomValue = ((min + max) / 2);
-    return randomValue;
 }
 
 function randomWalkUpdator(latestValue,walkingStep) {
@@ -64,9 +26,11 @@ function randomWalkUpdator(latestValue,walkingStep) {
         latestValue += walkingStep;
     else
         latestValue -= walkingStep;
+
     if(latestValue > max )
         latestValue = max;
     if(latestValue < min)
         latestValue = min;
+
     return latestValue;
 }

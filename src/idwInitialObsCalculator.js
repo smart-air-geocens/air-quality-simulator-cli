@@ -2,6 +2,7 @@
 
 module.exports = function idwInitialCalculator(data) {
 
+    console.log("calculating initial observation for each location using IDW technique...")
     const addedInitialObs = data.targetStations.map(station => {
         let totalDis = 0;
         let totalImpact = 0;

@@ -1,59 +1,47 @@
 #!/usr/bin/env node
-const knownSensorsOriginal = require('../data/knownSensors')
-const unknownSensorsOriginal = require('../data/unknownSensors')
+
 const randomWalk = require('../src/randomWalk')
-const idwCalculator = require('../src/idwCalculator')
 const jsonUpdator = require('../src/jsonUpdator')
 const uploadToSTA = require('../src/uploadToSTA')
 const prompt = require('prompt-sync')();
 const yargs = require("yargs");
-const readData = require('../src/dataReader');
 const getClosestStations = require('../src/getClosestStations')
-
 const writeJSON = require('../src/writeJson')
 const requestObservations = require('../src/latestObservations')
 const averageObservations = require('../src/averageValue')
 const idwInitialObsCalculator = require('../src/idwInitialObsCalculator')
-
-
 require('dotenv').config()
-
 const inputData = require("../data/data");
 const addCountry = require("../src/addCountry");
 
 
 let addedCountryData;
-(async () => {
-    addedCountryData = await addCountry(inputData);
 
-    const closestStations = await getClosestStations(addedCountryData, 5)
-    const addedObservations = await requestObservations(closestStations, 1, 20)
+const options = yargs
+    .usage("Usage: -n <name>")
+    // .option("n", { alias: "name", describe: "Your name", type: "string", demandOption: true })
+    .option("n", {
+        alias: "stationNumber",
+        describe: "The number of close stations you want to consider close to each location",
+        type: "number",
+        default: 2
+    })
+    .option("m", {
+        alias: "monthNumber",
+        describe: "The number of months ago you want to consider to extract observations",
+        type: "number",
+        default: 1
+    })
+    .option("o", {
+        alias: "observationCount",
+        describe: "The number of observations you want consider within the date range",
+        type: "number",
+        default: 20
+    })
+    .option("w", {alias: "walkingStep", describe: "The value of walking step", type: "number", default: 1})
+    .option("t", {alias: "timeInterval", describe: "time interval based on millisecond", type: "number", default: 10000})
+    .argv;
 
-    const averageObsAdded = await averageObservations(addedObservations)
-
-    const initialObsAdded =  idwInitialObsCalculator(averageObsAdded)
-    writeJSON(initialObsAdded, "initial")
-
-
-})();
-
-
-// let addedCountryData =  addCountry(inputData);
-// console.log(addedCountryData)
-
-
-// // Reading geoJSON files
-// let knownSensors = readData(knownSensorsOriginal)
-// let unknownSensors = readData(unknownSensorsOriginal)
-//
-//
-// const options = yargs
-//     .usage("Usage: -n <name>")
-//     // .option("n", { alias: "name", describe: "Your name", type: "string", demandOption: true })
-//     .option("w", {alias: "walkingStep", describe: "The value of walking step", type: "number", default: 10})
-//     .option("t", {alias: "timeInterval", describe: "time interval based on second", type: "number", default: 1})
-//     .argv;
-//
 // // Prompt user to input required information in console.
 // console.log("Please input required information in command line.");
 //
@@ -74,37 +62,40 @@ let addedCountryData;
 //     nullInfo("password")
 //     process.env.PASSWORD = prompt('Password: ');
 // }
-//
-//
+
 // function nullInfo(varName) {
 //     console.log(varName + " is required and cannot be null");
 // }
-//
-//
-// setInterval(function () {
-//
-//     knownSensors = randomWalk(knownSensors, options.walkingStep)
-//     unknownSensors = idwCalculator(unknownSensors, knownSensors)
-//
-//     const unknownSensorsParameters = unknownSensors.features.map(sensor => {
-//         const parameter = {
-//             "ThingName": "Station " + sensor.properties.name,
-//             "ThingDescription": "The outdoor station " + sensor.properties.name + " is a synthetic station to report PM2.5",
-//             "location": sensor.geometry.coordinates,
-//             "pm25": sensor.properties.pm25
-//         }
-//         const updatedJson = jsonUpdator(parameter)
-//         uploadToSTA(updatedJson)
-//         return null
-//     })
-//
-// }, options.walkingStep * 1000);
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+(async () => {
+    addedCountryData = await addCountry(inputData);
+
+    const closestStations = await getClosestStations(addedCountryData, options.stationNumber)
+    const addedObservations = await requestObservations(closestStations, options.monthNumber, options.observationCount)
+
+    const averageObsAdded = await averageObservations(addedObservations)
+
+    let initialObsAdded = idwInitialObsCalculator(averageObsAdded)
+    writeJSON(initialObsAdded, 'initial')
+
+    setInterval(function () {
+
+        initialObsAdded = randomWalk(initialObsAdded, options.walkingStep)
+
+        if (initialObsAdded.targetStations[0].pm25Latest) {
+            const pushData = initialObsAdded.targetStations.map(station => {
+                const parameter = {
+                    "ThingName": station.name,
+                    "ThingDescription": "The " + station.name + " is a synthetic station to report PM2.5",
+                    "location": station.properties.coordinates,
+                    "pm25": station.pm25Latest
+                }
+                const updatedJson = jsonUpdator(parameter)
+                uploadToSTA(updatedJson)
+                return null
+            })
+        }
+
+    }, options.timeInterval);
+
+})();

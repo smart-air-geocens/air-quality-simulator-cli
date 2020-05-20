@@ -7,7 +7,7 @@ module.exports =  function writeJson(json,fileName) {
             console.error(err);
             return;
         };
-        console.log(`Initial observations for closest station is created: data --> [%s]`,fileName + '.json');
+        console.log(`JSON file is created and can be downloaded: data --> [%s]`,fileName + '.json');
     });
 
 }

@@ -18,7 +18,6 @@ module.exports = async function averageValue(data){
         }))
         return {...station,'closeStations': closeStationsChanged}
     }))
-    console.log("finish Average")
     return {...data, 'targetStations': addedAverage}
 
 }
