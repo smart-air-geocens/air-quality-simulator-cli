@@ -3,6 +3,8 @@
 let template = require('../data/closeStations');
 const axios = require('axios')
 
+const OpenAQ_ENDPOINT = "https://api.openaq.org/v1";
+
 module.exports = async function getClosestStations(data, stationNumber) {
 
     console.log("Requesting Open AQ for closest stations...")
@@ -17,7 +19,7 @@ module.exports = async function getClosestStations(data, stationNumber) {
 }
 
 async function getStations(stationName, latitude, longitude, count) {
-    await axios.get(process.env.OPENAQ_ENDPOINT + "/locations?coordinates=" + latitude + "," + longitude + "&radius=10000000&order_by=distance&limit=" + count + "&parameter=pm25").then(response => {
+    await axios.get(OpenAQ_ENDPOINT + "/locations?coordinates=" + latitude + "," + longitude + "&radius=10000000&order_by=distance&limit=" + count + "&parameter=pm25").then(response => {
 
         let closestStations = response.data.results.map(closeStation => {
             return {

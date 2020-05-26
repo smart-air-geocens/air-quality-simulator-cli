@@ -1,5 +1,6 @@
 const axios = require('axios')
-const MapQuest_Key = process.env.MAPQUEST_KEY
+const MapQuest_Key = "Fmjtd|luubn96t2q,ag=o5-9070hz";
+const MapQuest_ENDPOINT = "http://open.mapquestapi.com/geocoding/v1";
 
 module.exports = async function addCountry(inputData) {
 
@@ -20,11 +21,11 @@ module.exports = async function addCountry(inputData) {
 
 async function getCountry(latitude,longitude) {
     let country;
-    await axios.get(process.env.MAPQUEST_ENDPOINT + "/reverse?key=" + MapQuest_Key +"&location=" + latitude + "," + longitude).then(response => {
+    await axios.get(MapQuest_ENDPOINT + "/reverse?key=" + MapQuest_Key +"&location=" + latitude + "," + longitude).then(response => {
         country = response.data.results[0].locations[0].adminArea1
     }).catch(function(error) {
         console.log('Error on Authentication');
     });
-    // console.log(country)
+
     return country;
 }

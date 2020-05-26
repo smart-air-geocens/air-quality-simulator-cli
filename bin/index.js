@@ -26,52 +26,53 @@ const options = yargs
         type: "number",
         default: 2
     })
-    .option("m", {
-        alias: "monthNumber",
-        describe: "The number of months ago you want to consider to extract observations",
-        type: "number",
-        default: 1
-    })
-    .option("o", {
-        alias: "observationCount",
-        describe: "The number of observations you want consider within the date range",
-        type: "number",
-        default: 20
-    })
+    // .option("m", {
+    //     alias: "monthNumber",
+    //     describe: "The number of months ago you want to consider to extract observations",
+    //     type: "number",
+    //     default: 1
+    // })
+    // .option("o", {
+    //     alias: "observationCount",
+    //     describe: "The number of observations you want consider within the date range",
+    //     type: "number",
+    //     default: 20
+    // })
     .option("w", {alias: "walkingStep", describe: "The value of walking step", type: "number", default: 1})
     .option("t", {alias: "timeInterval", describe: "time interval based on millisecond", type: "number", default: 10000})
     .argv;
 
-// // Prompt user to input required information in console.
-// console.log("Please input required information in command line.");
-//
-// process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
-// while (!process.env.STA_ENDPOINT){
-//     nullInfo("STA-Endpoint")
-//     process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
-// }
-//
-// process.env.USER_NAME = prompt('Username: ');
-// while (!process.env.USER_NAME){
-//     nullInfo("username")
-//     process.env.USER_NAME = prompt('Username: ');
-// }
-//
-// process.env.PASSWORD = prompt('Password: ',{echo: '*'})
-// while (!process.env.PASSWORD){
-//     nullInfo("password")
-//     process.env.PASSWORD = prompt('Password: ');
-// }
+// Prompt user to input required information in console.
+console.log("Please input required information in command line.");
 
-// function nullInfo(varName) {
-//     console.log(varName + " is required and cannot be null");
-// }
+process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
+while (!process.env.STA_ENDPOINT){
+    nullInfo("STA-Endpoint")
+    process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
+}
+
+process.env.USER_NAME = prompt('Username: ');
+while (!process.env.USER_NAME){
+    nullInfo("username")
+    process.env.USER_NAME = prompt('Username: ');
+}
+
+process.env.PASSWORD = prompt('Password: ',{echo: '*'})
+while (!process.env.PASSWORD){
+    nullInfo("password")
+    process.env.PASSWORD = prompt('Password: ');
+}
+
+function nullInfo(varName) {
+    console.log(varName + " is required and cannot be null");
+}
 
 (async () => {
     addedCountryData = await addCountry(inputData);
 
     const closestStations = await getClosestStations(addedCountryData, options.stationNumber)
-    const addedObservations = await requestObservations(closestStations, options.monthNumber, options.observationCount)
+    // const addedObservations = await requestObservations(closestStations, options.monthNumber, options.observationCount)
+    const addedObservations = await requestObservations(closestStations, 1, 6000)
 
     const averageObsAdded = await averageObservations(addedObservations)
 
