@@ -14,7 +14,6 @@ module.exports = async function latestObservations(json, monthNumber, observatio
 
     const fromDateTime = moment().subtract(monthNumber, 'month').toISOString()
 
-
     const promises = await Promise.all(json.targetStations.map(async (station) => {
         const test = await Promise.all(station.closeStations.map(async (closeStation) => {
             let observations = await stationsObservations(closeStation, fromDateTime, toDateTime, observationLimit)

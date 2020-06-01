@@ -10,7 +10,7 @@ module.exports = async function getClosestStations(data, stationNumber) {
     console.log("Requesting Open AQ for closest stations...")
     template.count = data.length
     const promises = data.map(async station => {
-        await getStations(station.properties.name, station.geometry.coordinates[1], station.geometry.coordinates[0], stationNumber)
+        await getStations(station.properties.name, station.geometry.coordinates[1], station.geometry.coordinates[0], stationNumber,station.weatherInfo)
     })
 
     const changedData = await Promise.all(promises);
@@ -18,7 +18,7 @@ module.exports = async function getClosestStations(data, stationNumber) {
     return template
 }
 
-async function getStations(stationName, latitude, longitude, count) {
+async function getStations(stationName, latitude, longitude, count, weatherInfo) {
     await axios.get(OpenAQ_ENDPOINT + "/locations?coordinates=" + latitude + "," + longitude + "&radius=10000000&order_by=distance&limit=" + count + "&parameter=pm25").then(response => {
 
         let closestStations = response.data.results.map(closeStation => {
@@ -44,6 +44,7 @@ async function getStations(stationName, latitude, longitude, count) {
                     latitude
                 ]
             },
+            "weatherInfo": weatherInfo,
             "closeStations": closestStations
         })
 
