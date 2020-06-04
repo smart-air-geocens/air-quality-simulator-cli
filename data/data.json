@@ -1,0 +1,109 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.31249999999999,
+          58.58543569119917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.884765625,
+          57.326521225217064
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.44335937499999,
+          55.229023057406344
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -113.73046875,
+          51.34433866059924
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.900390625,
+          62.79493487887006
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station6"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -131.396484375,
+          62.062733258846514
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -130.95703125,
+          58.53959476664049
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station8"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.09374999999999,
+          66.05371622067922
+        ]
+      }
+    }
+  ]
+}
