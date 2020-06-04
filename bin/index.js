@@ -39,7 +39,12 @@ const options = yargs
     //     type: "number",
     //     default: 20
     // })
-    .option("w", {alias: "walkingStep", describe: "The value of walking step", type: "number", default: 1})
+    .option("wp", {alias: "walkingStepPM25", describe: "The value of walking step to estimate PM2.5", type: "number", default: 1})
+    .option("wt", {alias: "walkingStepTemperature", describe: "The value of walking step to estimate temperature", type: "number", default: 1})
+    .option("wp", {alias: "walkingStepPressure", describe: "The value of walking step to estimate pressure", type: "number", default: 1})
+    .option("wh", {alias: "walkingStepHumidity", describe: "The value of walking step to estimate humidity", type: "number", default: 1})
+    .option("wws", {alias: "walkingStepWindSpeed", describe: "The value of walking step to estimate wind speed", type: "number", default: 1})
+    .option("wwd", {alias: "walkingStepWindDirection", describe: "The value of walking step to estimate wind direction", type: "number", default: 1})
     .option("t", {alias: "timeInterval", describe: "time interval based on millisecond", type: "number", default: 10000})
     .argv;
 
@@ -84,20 +89,35 @@ const options = yargs
 
     setInterval(function () {
 
-        initialObsAdded = randomWalk(initialObsAdded, options.walkingStep)
+        initialObsAdded = randomWalk(initialObsAdded,
+            options.walkingStepPM25,
+            options.walkingStepTemperature,
+            options.walkingStepPressure,
+            options.walkingStepHumidity,
+            options.walkingStepWindSpeed,
+            options.walkingStepWindDirection)
+
 
         if (initialObsAdded.targetStations[0].pm25Latest) {
-            const pushData = initialObsAdded.targetStations.map(station => {
+
+            const pushData = initialObsAdded.targetStations.map(async station => {
                 const parameter = {
                     "ThingName": station.name,
-                    "ThingDescription": "The " + station.name + " is a synthetic station to report PM2.5",
+                    "ThingDescription": "The " + station.name + " is a synthetic station to report air quality and weather conditions",
                     "location": station.properties.coordinates,
-                    "pm25": station.pm25Latest
+                    "pm25": station.pm25Latest,
+                    "temperature" : station.weatherInfo.temp,
+                    "pressure" : station.weatherInfo.pressure,
+                    "humidity" : station.weatherInfo.humidity,
+                    "windSpeed" : station.weatherInfo.wind.speed,
+                    "windDirection" : station.weatherInfo.wind.direction
+
                 }
-                const updatedJson = jsonUpdator(parameter)
-                // uploadToSTA(updatedJson)
+                const updatedJson = await jsonUpdator(parameter)
+                uploadToSTA(updatedJson)
                 return null
             })
+
         }
 
     }, options.timeInterval);
