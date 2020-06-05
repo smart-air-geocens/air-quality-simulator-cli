@@ -21,7 +21,7 @@ module.exports = function jsonUpdator(newObservations) {
     };
 
     if (newObservations.ThingName != null){
-        templateJson.common.Datastream.Thing.name = newObservations.ThingName;
+        templateJson.common.Datastream.Thing.name = "T "+newObservations.ThingName;
         templateJson.common.Datastream.Thing.description = newObservations.ThingDescription;
     };
 
@@ -77,7 +77,7 @@ module.exports = function jsonUpdator(newObservations) {
             {
                 "result": newObservations.pressure,
                 "Datastream": {
-                    "name": newObservations.ThingName + ":Temperature",
+                    "name": newObservations.ThingName + ":Pressure",
                     "description": "The Pressure Datastream for station "+ newObservations.ThingName,
                     "Sensor": {
                         "name": newObservations.ThingName + ":Pressure",

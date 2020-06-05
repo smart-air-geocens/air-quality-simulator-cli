@@ -14,6 +14,6 @@ module.exports = function uploadToSTA(sampleJson) {
             console.log("Successfully uploaded to " + response.data[0]['@iot.selfLink'])
 
         }).catch(function(error) {
-        console.log(error);
+        console.log(error.message);
     });
 }
