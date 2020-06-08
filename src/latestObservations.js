@@ -15,25 +15,40 @@ module.exports = async function latestObservations(json, monthNumber, observatio
     const fromDateTime = moment().subtract(monthNumber, 'month').toISOString()
 
     const promises = await Promise.all(json.targetStations.map(async (station) => {
-        const test = await Promise.all(station.closeStations.map(async (closeStation) => {
-            let observations = await stationsObservations(closeStation, fromDateTime, toDateTime, observationLimit)
-            let data = {...closeStation, "Observations": observations}
 
-            return data
+        const stationsData = await Promise.all(Object.keys(station.closeStations).map(async observedPropertyKey => {
+
+            const addedObservation2Station = await Promise.all(station.closeStations[observedPropertyKey].map(async closeStation => {
+
+                let observations = await stationsObservations(closeStation, fromDateTime, toDateTime, observationLimit, observedPropertyKey)
+
+                let data = {...closeStation, "Observations": observations}
+
+                return data
+            }))
+
+
+            station.closeStations[observedPropertyKey] = addedObservation2Station
+
+
+            return null
+
         }))
 
-        return {...station, "closeStations": test}
+        return null
+        //
     }))
-    addedData = {...json, "targetStations": promises}
+    // const addedData = {...json, "targetStations": promises}
+    //
     console.log("Observations are successfully extracted")
-    return addedData
-
+    //
+    return json
 }
 
-async function stationsObservations(station, from, to, limit) {
+async function stationsObservations(station, from, to, limit, observedProperty) {
     let observations;
     let res = await axios.get(OpenAQ_ENDPOINT + "/measurements?country=" + station.country + "&city=" + station.city + "&location=" + station.name +
-        "&parameter=pm25&date_from=" + from + "&date_to=" + to + "&limit=" + limit)
+        "&parameter=" + observedProperty + "&date_from=" + from + "&date_to=" + to + "&limit=" + limit)
 
     if (res.data.results.length > 0) {
         observations = res.data.results.map(observation => {
