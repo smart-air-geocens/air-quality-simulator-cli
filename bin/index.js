@@ -44,7 +44,7 @@ const options = yargs
     .option("so2", {alias: "SO2Observation", describe: "Do you like adding SO2 as an observation?", type: "boolean", default: true})
     .option("no2", {alias: "NO2Observation", describe: "Do you like adding NO2 as an observation?", type: "boolean", default: true})
     .option("o3", {alias: "O3Observation", describe: "Do you like adding O3 as an observation?", type: "boolean", default: true})
-    .option("co", {alias: "COObservation", describe: "Do you like adding CO as an observation?", type: "boolean", default: false})
+    .option("co", {alias: "COObservation", describe: "Do you like adding CO as an observation?", type: "boolean", default: true})
 
     .option("wpm25", {alias: "walkingStepPM25", describe: "The value of walking step to estimate PM2.5", type: "number", default: 1})
     .option("wpm10", {alias: "walkingStepPM10", describe: "The value of walking step to estimate PM10", type: "number", default: 1})
@@ -119,7 +119,7 @@ const options = yargs
     }
 
     const closestStations = await getClosestStations(addedWeather, options.stationNumber,requiredObservedProperties)
-    // writeJSON(closestStations, 'initial')
+    // writeJSON(closestStations, 'initial0')
 
     // // const addedObservations = await requestObservations(closestStations, options.monthNumber, options.observationCount)
     // // const addedObservations = await requestObservations(closestStations, 1, 6000)

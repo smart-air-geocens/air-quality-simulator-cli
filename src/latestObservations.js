@@ -48,17 +48,22 @@ module.exports = async function latestObservations(json, monthNumber, observatio
 async function stationsObservations(station, from, to, limit, observedProperty) {
     let observations;
     let res = await axios.get(OpenAQ_ENDPOINT + "/measurements?country=" + station.country + "&city=" + station.city + "&location=" + station.name +
-        "&parameter=" + observedProperty + "&date_from=" + from + "&date_to=" + to + "&limit=" + limit)
+        "&parameter=" + observedProperty + "&date_from=" + from + "&date_to=" + to + "&limit=" + limit).catch(error => {
+            return null
+    })
 
-    if (res.data.results.length > 0) {
-        observations = res.data.results.map(observation => {
-            return {
-                "datastrreamName": observation.parameter,
-                "phenomenonTime": observation.date.utc,
-                "value": observation.value,
-                "uofm": observation.unit
-            }
-        })
+
+    if (res && res.data) {
+        if(res.data.results.length > 0){
+            observations = res.data.results.map(observation => {
+                return {
+                    "datastrreamName": observation.parameter,
+                    "phenomenonTime": observation.date.utc,
+                    "value": observation.value,
+                    "uofm": observation.unit
+                }
+            })
+        }
     }
 
     return observations
