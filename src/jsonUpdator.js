@@ -1,5 +1,6 @@
 module.exports = function jsonUpdator(newObservations) {
 
+
     let templateJson = {
         "common": {
             "Datastream": {
@@ -20,8 +21,10 @@ module.exports = function jsonUpdator(newObservations) {
         "Observations": []
     };
 
+    let updatedArrayObservation = []
+
     if (newObservations.ThingName != null){
-        templateJson.common.Datastream.Thing.name = "T "+newObservations.ThingName;
+        templateJson.common.Datastream.Thing.name = "T1 "+newObservations.ThingName;
         templateJson.common.Datastream.Thing.description = newObservations.ThingDescription;
     };
 
@@ -34,7 +37,7 @@ module.exports = function jsonUpdator(newObservations) {
 
     if (newObservations.temperature != null){
 
-        templateJson.Observations.push(
+        updatedArrayObservation.push(
             {
                 "result": newObservations.temperature,
                 "Datastream": {
@@ -73,7 +76,7 @@ module.exports = function jsonUpdator(newObservations) {
 
     if (newObservations.pressure != null){
 
-        templateJson.Observations.push(
+        updatedArrayObservation.push(
             {
                 "result": newObservations.pressure,
                 "Datastream": {
@@ -112,7 +115,7 @@ module.exports = function jsonUpdator(newObservations) {
 
     if (newObservations.humidity != null){
 
-        templateJson.Observations.push(
+        updatedArrayObservation.push(
             {
                 "result": newObservations.humidity,
                 "Datastream": {
@@ -148,10 +151,10 @@ module.exports = function jsonUpdator(newObservations) {
             }
         );
     };
-
+/////
     if (newObservations.windSpeed != null){
 
-        templateJson.Observations.push(
+        updatedArrayObservation.push(
             {
                 "result": newObservations.windSpeed,
                 "Datastream": {
@@ -190,7 +193,7 @@ module.exports = function jsonUpdator(newObservations) {
 
     if (newObservations.windDirection != null){
 
-        templateJson.Observations.push(
+        updatedArrayObservation.push(
             {
                 "result": newObservations.windDirection,
                 "Datastream": {
@@ -229,7 +232,7 @@ module.exports = function jsonUpdator(newObservations) {
 
     if (newObservations.pm25 != null){
 
-        templateJson.Observations.push(
+        updatedArrayObservation.push(
             {
                 "result": newObservations.pm25,
                 "Datastream": {
@@ -265,5 +268,203 @@ module.exports = function jsonUpdator(newObservations) {
             }
         );
     };
-    return templateJson
+
+    if (newObservations.pm10 != null){
+
+        updatedArrayObservation.push(
+            {
+                "result": newObservations.pm10,
+                "Datastream": {
+                    "name": newObservations.ThingName + ":PM10",
+                    "description": "The PM10 Datastream for station "+ newObservations.ThingName,
+                    "Sensor": {
+                        "name": newObservations.ThingName + ":PM10",
+                        "encodingType": "text/html",
+                        "metadata":"https://en.wikipedia.org/wiki/Inverse_distance_weighting",
+                        "description":"This is a synthetic sensor that its observation is calculated based on IDW method from observations obtained initially from aqicn.org"
+                    },
+                    "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                    "unitOfMeasurement": {
+                        "symbol": "ug/m3",
+                        "name": "microgram per cubic meter",
+                        "definition": "https://www.eea.europa.eu/themes/air/air-quality/resources/glossary/g-m3"
+                    },
+                    "ObservedProperty": {
+                        "name": "pm10",
+                        "definition": "https://en.wikipedia.org/wiki/Particulates",
+                        "description": "PM10 Particulates"
+                    }
+                },
+                "FeatureOfInterest": {
+                    "encodingType": "application/vnd.geo+json",
+                    "description": "Generated using location details: The location that " + newObservations.ThingName + " is deployed",
+                    "name": "Air Quality Station - " + newObservations.ThingName,
+                    "feature": {
+                        "type": "Point",
+                        "coordinates": [ newObservations.location[0], newObservations.location[1] ]
+                    }
+                }
+            }
+        );
+    };
+
+    if (newObservations.so2 != null){
+
+        updatedArrayObservation.push(
+            {
+                "result": newObservations.so2,
+                "Datastream": {
+                    "name": newObservations.ThingName + ":SO2",
+                    "description": "The SO2 Datastream for station "+ newObservations.ThingName,
+                    "Sensor": {
+                        "name": newObservations.ThingName + ":SO2",
+                        "encodingType": "text/html",
+                        "metadata":"https://en.wikipedia.org/wiki/Inverse_distance_weighting",
+                        "description":"This is a synthetic sensor that its observation is calculated based on IDW method from observations obtained initially from aqicn.org"
+                    },
+                    "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                    "unitOfMeasurement": {
+                        "symbol": "ppm",
+                        "name": "parts per million",
+                        "definition": "https://en.wikipedia.org/wiki/Parts-per_notation"
+                    },
+                    "ObservedProperty": {
+                        "name": "so2",
+                        "definition": "https://www.ivhhn.org/information/information-different-volcanic-gases/sulphur-dioxide",
+                        "description": "Sulphur Dioxide (SO2)"
+                    }
+                },
+                "FeatureOfInterest": {
+                    "encodingType": "application/vnd.geo+json",
+                    "description": "Generated using location details: The location that " + newObservations.ThingName + " is deployed",
+                    "name": "Air Quality Station - " + newObservations.ThingName,
+                    "feature": {
+                        "type": "Point",
+                        "coordinates": [ newObservations.location[0], newObservations.location[1] ]
+                    }
+                }
+            }
+        );
+    };
+
+    if (newObservations.no2 != null){
+
+        updatedArrayObservation.push(
+            {
+                "result": newObservations.no2,
+                "Datastream": {
+                    "name": newObservations.ThingName + ":NO2",
+                    "description": "The NO2 Datastream for station "+ newObservations.ThingName,
+                    "Sensor": {
+                        "name": newObservations.ThingName + ":NO2",
+                        "encodingType": "text/html",
+                        "metadata":"https://en.wikipedia.org/wiki/Inverse_distance_weighting",
+                        "description":"This is a synthetic sensor that its observation is calculated based on IDW method from observations obtained initially from aqicn.org"
+                    },
+                    "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                    "unitOfMeasurement": {
+                        "symbol": "ppm",
+                        "name": "parts per million",
+                        "definition": "https://en.wikipedia.org/wiki/Parts-per_notation"
+                    },
+                    "ObservedProperty": {
+                        "name": "no2",
+                        "definition": "https://en.wikipedia.org/wiki/Nitrogen_dioxide",
+                        "description": "Nitrogen Dioxide (NO2)"
+                    }
+                },
+                "FeatureOfInterest": {
+                    "encodingType": "application/vnd.geo+json",
+                    "description": "Generated using location details: The location that " + newObservations.ThingName + " is deployed",
+                    "name": "Air Quality Station - " + newObservations.ThingName,
+                    "feature": {
+                        "type": "Point",
+                        "coordinates": [ newObservations.location[0], newObservations.location[1] ]
+                    }
+                }
+            }
+        );
+    };
+
+    if (newObservations.o3 != null){
+
+        updatedArrayObservation.push(
+            {
+                "result": newObservations.o3,
+                "Datastream": {
+                    "name": newObservations.ThingName + ":O3",
+                    "description": "The O3 Datastream for station "+ newObservations.ThingName,
+                    "Sensor": {
+                        "name": newObservations.ThingName + ":O3",
+                        "encodingType": "text/html",
+                        "metadata":"https://en.wikipedia.org/wiki/Inverse_distance_weighting",
+                        "description":"This is a synthetic sensor that its observation is calculated based on IDW method from observations obtained initially from aqicn.org"
+                    },
+                    "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                    "unitOfMeasurement": {
+                        "symbol": "ppm",
+                        "name": "parts per million",
+                        "definition": "https://en.wikipedia.org/wiki/Parts-per_notation"
+                    },
+                    "ObservedProperty": {
+                        "name": "o3",
+                        "definition": "https://en.wikipedia.org/wiki/Ozone",
+                        "description": "Ozone (O3)"
+                    }
+                },
+                "FeatureOfInterest": {
+                    "encodingType": "application/vnd.geo+json",
+                    "description": "Generated using location details: The location that " + newObservations.ThingName + " is deployed",
+                    "name": "Air Quality Station - " + newObservations.ThingName,
+                    "feature": {
+                        "type": "Point",
+                        "coordinates": [ newObservations.location[0], newObservations.location[1] ]
+                    }
+                }
+            }
+        );
+    };
+
+    if (newObservations.co != null){
+
+        updatedArrayObservation.push(
+            {
+                "result": newObservations.co,
+                "Datastream": {
+                    "name": newObservations.ThingName + ":CO",
+                    "description": "The CO Datastream for station "+ newObservations.ThingName,
+                    "Sensor": {
+                        "name": newObservations.ThingName + ":CO",
+                        "encodingType": "text/html",
+                        "metadata":"https://en.wikipedia.org/wiki/Inverse_distance_weighting",
+                        "description":"This is a synthetic sensor that its observation is calculated based on IDW method from observations obtained initially from aqicn.org"
+                    },
+                    "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                    "unitOfMeasurement": {
+                        "symbol": "ppm",
+                        "name": "parts per million",
+                        "definition": "https://en.wikipedia.org/wiki/Parts-per_notation"
+                    },
+                    "ObservedProperty": {
+                        "name": "co",
+                        "definition": "https://en.wikipedia.org/wiki/Carbon_monoxide",
+                        "description": "Carbon Monoxide (CO)"
+                    }
+                },
+                "FeatureOfInterest": {
+                    "encodingType": "application/vnd.geo+json",
+                    "description": "Generated using location details: The location that " + newObservations.ThingName + " is deployed",
+                    "name": "Air Quality Station - " + newObservations.ThingName,
+                    "feature": {
+                        "type": "Point",
+                        "coordinates": [ newObservations.location[0], newObservations.location[1] ]
+                    }
+                }
+            }
+        );
+    };
+
+
+
+    return {...templateJson , "Observations":updatedArrayObservation}
 }
