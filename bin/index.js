@@ -25,7 +25,7 @@ const options = yargs
         alias: "stationNumber",
         describe: "The number of close stations you want to consider close to each location",
         type: "number",
-        default: 2
+        default: 10
     })
     // .option("m", {
     //     alias: "monthNumber",
@@ -55,25 +55,25 @@ const options = yargs
         alias: "SO2Observation",
         describe: "Do you like adding SO2 as an observation?",
         type: "boolean",
-        default: true
+        default: false
     })
     .option("no2", {
         alias: "NO2Observation",
         describe: "Do you like adding NO2 as an observation?",
         type: "boolean",
-        default: true
+        default: false
     })
     .option("o3", {
         alias: "O3Observation",
         describe: "Do you like adding O3 as an observation?",
         type: "boolean",
-        default: true
+        default: false
     })
     .option("co", {
         alias: "COObservation",
         describe: "Do you like adding CO as an observation?",
         type: "boolean",
-        default: true
+        default: false
     })
 
     .option("wpm25", {
@@ -152,30 +152,30 @@ const options = yargs
     })
     .argv;
 
-// // Prompt user to input required information in console.
-// console.log("Please input required information in command line.");
-//
-// process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
-// while (!process.env.STA_ENDPOINT){
-//     nullInfo("STA-Endpoint")
-//     process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
-// }
-//
-// process.env.USER_NAME = prompt('Username: ');
-// while (!process.env.USER_NAME){
-//     nullInfo("username")
-//     process.env.USER_NAME = prompt('Username: ');
-// }
-//
-// process.env.PASSWORD = prompt('Password: ',{echo: '*'})
-// while (!process.env.PASSWORD){
-//     nullInfo("password")
-//     process.env.PASSWORD = prompt('Password: ');
-// }
-//
-// function nullInfo(varName) {
-//     console.log(varName + " is required and cannot be null");
-// }
+// Prompt user to input required information in console.
+console.log("Please input required information in command line.");
+
+process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
+while (!process.env.STA_ENDPOINT){
+    nullInfo("STA-Endpoint")
+    process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
+}
+
+process.env.USER_NAME = prompt('Username: ');
+while (!process.env.USER_NAME){
+    nullInfo("username")
+    process.env.USER_NAME = prompt('Username: ');
+}
+
+process.env.PASSWORD = prompt('Password: ',{echo: '*'})
+while (!process.env.PASSWORD){
+    nullInfo("password")
+    process.env.PASSWORD = prompt('Password: ');
+}
+
+function nullInfo(varName) {
+    console.log(varName + " is required and cannot be null");
+}
 
 (async () => {
     addedCountryData = await addCountry(inputData);
