@@ -8,7 +8,6 @@ module.exports = async function addCountry(inputData) {
         const country = await getCountry(station.geometry.coordinates[1],station.geometry.coordinates[0])
         station.properties = {
             "name":station.properties.name,
-            "pm25":null,
             "country": country
         }
         return station;
