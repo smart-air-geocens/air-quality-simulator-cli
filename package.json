@@ -1,10 +1,13 @@
 {
-  "name": "air-quality-simulator-cli",
-  "version": "0.1.0",
-  "description": "",
+  "name": "@smart-air-geocens/air-quality-simulator-cli",
+  "version": "0.2.0",
+  "description": "A air quality simulator CLI for the Smart Air (GeoCENS) project.",
   "main": "bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "url": "git@github.com:smart-air-geocens/air-quality-simulator-cli.git"
   },
   "keywords": [],
   "author": "Soroush Ojagh",
