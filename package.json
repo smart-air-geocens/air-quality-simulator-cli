@@ -1,5 +1,5 @@
 {
-  "name": "geocens",
+  "name": "air-quality-simulator-cli",
   "version": "0.1.0",
   "description": "",
   "main": "bin/index.js",
@@ -18,5 +18,8 @@
     "moment": "^2.25.3",
     "prompt-sync": "^4.2.0",
     "yargs": "^13.2.4"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }

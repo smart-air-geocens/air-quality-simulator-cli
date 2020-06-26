@@ -1,4 +1,4 @@
-# air-quality-simulator-cli
+# Air Quality Simulator CLI
 
 ## Installation
 
