@@ -8,6 +8,8 @@ To install the simulator Node CLI application:
 2. Open Command Prompt window in the folder you have cloned the project;
 3. Run this command: `npm install -g .`
 
+You can also install the NPM package from GitHub's NPM registry - see [here](https://github.com/orgs/smart-air-geocens/packages).
+
 ## How to run the simulator
 
 To get more information about possible options that can be set before running the simulator, run this command:
