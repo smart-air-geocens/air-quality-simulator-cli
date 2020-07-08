@@ -2,7 +2,7 @@
 
 module.exports = async function idwInitialCalculator(data) {
 
-    console.log("calculating initial observation for each location using IDW technique...")
+    console.log("calculating initial observation for each location using IDW interpolation technique...")
 
     const addedInitialObs = await Promise.all(data.targetStations.map(async station => {
 
@@ -39,18 +39,4 @@ module.exports = async function idwInitialCalculator(data) {
     }))
     return {...data, 'targetStations': addedInitialObs}
 
-
-    // const addedInitialObs = data.targetStations.map(station => {
-    //     let totalDis = 0;
-    //     let totalImpact = 0;
-    //     station.closeStations.map(closeStation => {
-    //         if (closeStation) {
-    //             totalDis += closeStation.distance
-    //             totalImpact += (closeStation.averageObservation * closeStation.distance)
-    //             return null
-    //         }
-    //     })
-    //     return {...station,"initialObservation": totalImpact/totalDis}
-    // })
-    // return {...data, 'targetStations':addedInitialObs}
 }
