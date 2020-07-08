@@ -15,7 +15,9 @@ module.exports = async function averageValue(data) {
                         // return null;
                     })
                     return {...closeStation, "averageObservation": sum / closeStation.Observations.length}
-                }
+                }else
+                    return {...closeStation, "averageObservation": "NA"}
+
             }))
             station.closeStations[key] = closeStationPerOP
 

@@ -7,16 +7,17 @@ module.exports = async function idwInitialCalculator(data) {
     const addedInitialObs = await Promise.all(data.targetStations.map(async station => {
 
         let initialArray = await Promise.all(Object.keys(station.closeStations).map( key => {
-            const memberName = "initialObservation_" + key;
             let totalDis = 0;
             let totalImpact = 0;
             let unitOfMeasurement = "NA"
             station.closeStations[key].forEach(closeStation => {
-                if (closeStation) {
-                    totalDis += closeStation.distance
-                    totalImpact += (closeStation.averageObservation * closeStation.distance)
-                    unitOfMeasurement = closeStation.Observations[0].uofm
-                    return null
+                if(closeStation.averageObservation !== "NA"){
+                    if (closeStation) {
+                        totalDis += closeStation.distance
+                        totalImpact += (closeStation.averageObservation * closeStation.distance)
+                        if(closeStation.Observations) unitOfMeasurement = closeStation.Observations[0].uofm
+                        return null
+                    }
                 }
             })
 

@@ -13,7 +13,7 @@
   "author": "Soroush Ojagh",
   "license": "MIT",
   "bin": {
-    "air-quality-simulator": "./bin/index.js"
+    "a": "./bin/index.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
