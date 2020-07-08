@@ -38,6 +38,22 @@ In this simulator, you can easily change the target locations that you are going
     ...
 ```
 
+### Interpolation techniques
+
+In this simulator, two different interpolation techniques are used including The IDW (Inverse Distance Weighted) and Kriging techniques. The underlying reason to apply interpolation techniques is for predicting the initial observation for the user selected target station based on observations collected from closest stations.  
+
+The IDW interpolation technique is referred to as deterministic interpolation method because it is directly based on the surrounding collected observations. A second family of interpolation methods consists of geostatistical methods, such as kriging, which are based on statistical models that include autocorrelation—that is, the statistical relationships among the measured points.
+
+In the simulator both techniques are implemented. So, users can easily choose the interpolation model by running this commonad:
+
+`air-quality-simulator --model idw`
+
+or
+
+`air-quality-simulator --model kriging`
+
+Note: the default interpolation method is IDW technique. So, if you want to apply this technique, you do not need to set the model.
+
 ### Number of stations
 
 Using environmental data provided by [OpenAQ](https://openaq.org/#/?_k=morc67), we are going to let users select their desired number of OpenAQ stations surrounding each user selected station in the input data. So, you can easily set the number of OpenAQ stations arround each of your selected locations. For example, you can set 20 stations around each selected location by running this command:
@@ -188,15 +204,25 @@ In this example, the value of Wind Direction observation will change 2 degrees i
 
 You can set your desired combination of options by running something similar to following commands:
 
-`air-quality-simulator -n 2 -t 2 --co true --wco 0.05 --wws 5 --wt 2`
+`air-quality-simulator -n 2 --model kriging -t 2 --co true --wco 0.05 --wws 5 --wt 2`
 
-Running the simulator requires the following information:
+### Running the simulator
+
+To run the simulator, you will be asked to fill the following information:
 
 1. The URL of OGC SensorThings API endpoint (like: `https://scratchpad.sensorup.com/OGCSensorThings/v1.0`);
 2. Username (like: `main`);
 3. Password (like: `xxx`);
 
 Please note that all the required information should be entered by the user and they cannot be left empty.
+
+Note: For the users convenience, all the required information can be set once. To this end, please create a ".env" file in the root directory of node cli application. Then, copy the following variables and replace their values with your own information:
+
+`USER_NAME = 'ABC'`
+
+`PASSWORD = 'XXX'`
+
+`STA_ENDPOINT = "https://XXX.com"`
 
 ### Stop the Simulator
 

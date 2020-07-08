@@ -159,30 +159,32 @@ const options = yargs
     })
     .argv;
 
-// // Prompt user to input required information in console.
-// console.log("Please input required information in command line.");
-//
-// process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
-// while (!process.env.STA_ENDPOINT){
-//     nullInfo("STA-Endpoint")
-//     process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
-// }
-//
-// process.env.USER_NAME = prompt('Username: ');
-// while (!process.env.USER_NAME){
-//     nullInfo("username")
-//     process.env.USER_NAME = prompt('Username: ');
-// }
-//
-// process.env.PASSWORD = prompt('Password: ',{echo: '*'})
-// while (!process.env.PASSWORD){
-//     nullInfo("password")
-//     process.env.PASSWORD = prompt('Password: ');
-// }
-//
-// function nullInfo(varName) {
-//     console.log(varName + " is required and cannot be null");
-// }
+if(!process.env.USER_NAME || !process.env.PASSWORD || !process.env.STA_ENDPOINT ){
+    // Prompt user to input required information in console.
+    console.log("Please input required information in command line.");
+
+    process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
+    while (!process.env.STA_ENDPOINT){
+        nullInfo("STA-Endpoint")
+        process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
+    }
+
+    process.env.USER_NAME = prompt('Username: ');
+    while (!process.env.USER_NAME){
+        nullInfo("username")
+        process.env.USER_NAME = prompt('Username: ');
+    }
+
+    process.env.PASSWORD = prompt('Password: ',{echo: '*'})
+    while (!process.env.PASSWORD){
+        nullInfo("password")
+        process.env.PASSWORD = prompt('Password: ');
+    }
+
+    function nullInfo(varName) {
+        console.log(varName + " is required and cannot be null");
+    }
+}
 
 
 (async () => {
