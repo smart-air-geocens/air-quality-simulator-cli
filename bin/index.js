@@ -47,6 +47,12 @@ const options = yargs
         choices: ['idw', 'kriging'],
         default: "idw"
     })
+    .option("vgModel", {
+        alias: "VariogramModels",
+        describe: "What type of variogram do you want to apply?",
+        choices: ['gaussian', 'exponential','spherical'],
+        default: "exponential"
+    })
     .option("pm25", {
         alias: "PM25Observation",
         describe: "Do you like adding PM2.5 as an observation?",
@@ -229,7 +235,7 @@ if(!process.env.USER_NAME || !process.env.PASSWORD || !process.env.STA_ENDPOINT 
     let initialObsAdded;
 
     if (options.InterpolationTechnique === "idw") initialObsAdded = await idwInitialObsCalculator(averageObsAdded)
-    else initialObsAdded = await krigingPreparation(averageObsAdded)
+    else initialObsAdded = await krigingPreparation(averageObsAdded,options.VariogramModels)
 
     writeJSON(initialObsAdded, 'initial')
 

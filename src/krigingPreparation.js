@@ -1,12 +1,14 @@
 const krigingTrain = require("../src/krigingTrain");
 const krigingPredict = require("../src/krigingPredict");
 
-let model = "exponential";
+let model;
 const sigma2 = 0, alpha = 100;
 
-module.exports =  async function krigingPreparation(data) {
+module.exports =  async function krigingPreparation(data,vgModel) {
 
     console.log("calculating initial observation for each location using Kriging interpolation technique...")
+
+    model = vgModel
 
     const addedInitialObs = await Promise.all(data.targetStations.map(async station => {
 
