@@ -13,10 +13,12 @@ const idwInitialObsCalculator = require('../src/idwInitialObsCalculator')
 require('dotenv').config()
 const inputData = require("../data/data");
 const addCountry = require("../src/addCountry");
-const addWeather = require("../src/addWeather")
+const addWeather = require("../src/addWeather");
+const krigingPreparation = require("../src/krigingPreparation");
 
 
 let addedCountryData;
+const sigma2 = 0, alpha = 100;
 
 const options = yargs
     .usage("Usage: -n <name>")
@@ -39,6 +41,18 @@ const options = yargs
     //     type: "number",
     //     default: 20
     // })
+    .option("model", {
+        alias: "InterpolationTechnique",
+        describe: "What interpolation technique do you want to apply?",
+        choices: ['idw', 'kriging'],
+        default: "idw"
+    })
+    .option("vgModel", {
+        alias: "VariogramModels",
+        describe: "What type of variogram do you want to apply?",
+        choices: ['gaussian', 'exponential','spherical'],
+        default: "exponential"
+    })
     .option("pm25", {
         alias: "PM25Observation",
         describe: "Do you like adding PM2.5 as an observation?",
@@ -113,7 +127,6 @@ const options = yargs
         default: 0.01
     })
 
-
     .option("wt", {
         alias: "walkingStepTemperature",
         describe: "The value of walking step to estimate temperature",
@@ -152,32 +165,37 @@ const options = yargs
     })
     .argv;
 
-// Prompt user to input required information in console.
-console.log("Please input required information in command line.");
+if(!process.env.USER_NAME || !process.env.PASSWORD || !process.env.STA_ENDPOINT ){
+    // Prompt user to input required information in console.
+    console.log("Please input required information in command line.");
 
-process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
-while (!process.env.STA_ENDPOINT){
-    nullInfo("STA-Endpoint")
-    process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
-}
+    process.env.STA_ENDPOINT = prompt('STA-Endpoint: ')
+    while (!process.env.STA_ENDPOINT){
+        nullInfo("STA-Endpoint")
+        process.env.STA_ENDPOINT = prompt('STA-Endpoint: ');
+    }
 
-process.env.USER_NAME = prompt('Username: ');
-while (!process.env.USER_NAME){
-    nullInfo("username")
     process.env.USER_NAME = prompt('Username: ');
+    while (!process.env.USER_NAME){
+        nullInfo("username")
+        process.env.USER_NAME = prompt('Username: ');
+    }
+
+    process.env.PASSWORD = prompt('Password: ',{echo: '*'})
+    while (!process.env.PASSWORD){
+        nullInfo("password")
+        process.env.PASSWORD = prompt('Password: ');
+    }
+
+    function nullInfo(varName) {
+        console.log(varName + " is required and cannot be null");
+    }
 }
 
-process.env.PASSWORD = prompt('Password: ',{echo: '*'})
-while (!process.env.PASSWORD){
-    nullInfo("password")
-    process.env.PASSWORD = prompt('Password: ');
-}
-
-function nullInfo(varName) {
-    console.log(varName + " is required and cannot be null");
-}
 
 (async () => {
+
+
     addedCountryData = await addCountry(inputData);
     const addedWeather = await addWeather(addedCountryData)
 
@@ -210,12 +228,15 @@ function nullInfo(varName) {
 
     const closestStations = await getClosestStations(addedWeather, options.stationNumber, requiredObservedProperties)
 
-    const addedObservations = await requestObservations(closestStations, 1, 2)
-    // // const addedObservations = await requestObservations(closestStations, options.monthNumber, options.observationCount)
+    const addedObservations = await requestObservations(closestStations, 1, 2);
 
-    const averageObsAdded = await averageObservations(addedObservations)
+    const averageObsAdded = await averageObservations(addedObservations);
 
-    let initialObsAdded = await idwInitialObsCalculator(averageObsAdded)
+    let initialObsAdded;
+
+    if (options.InterpolationTechnique === "idw") initialObsAdded = await idwInitialObsCalculator(averageObsAdded)
+    else initialObsAdded = await krigingPreparation(averageObsAdded,options.VariogramModels)
+
     writeJSON(initialObsAdded, 'initial')
 
     setInterval(async function () {
@@ -228,8 +249,7 @@ function nullInfo(varName) {
             options.walkingStepWindSpeed,
             options.walkingStepWindDirection)
 
-
-        const pushData = initialObsAdded.targetStations.map( station => {
+        const pushData = initialObsAdded.targetStations.map(station => {
             const parameter = {
                 "ThingName": station.name,
                 "ThingDescription": "The " + station.name + " is a synthetic station to report air quality and weather conditions",
@@ -243,42 +263,42 @@ function nullInfo(varName) {
 
             Object.keys(requiredObservedProperties).forEach(key => {
 
-                if(requiredObservedProperties[key].required){
+                if (requiredObservedProperties[key].required) {
 
                     switch (key) {
                         case 'pm25':
                             station.InitialObsevations.forEach(OP => {
-                                if(OP.name === "pm25")
+                                if (OP.name === "pm25")
                                     parameter ['pm25'] = OP.value
                             })
                             break
                         case 'pm10':
                             station.InitialObsevations.forEach(OP => {
-                                if(OP.name === "pm10")
+                                if (OP.name === "pm10")
                                     parameter ['pm10'] = OP.value
                             })
                             break
                         case 'so2':
                             station.InitialObsevations.forEach(OP => {
-                                if(OP.name === "so2")
+                                if (OP.name === "so2")
                                     parameter ['so2'] = OP.value
                             })
                             break
                         case 'no2':
                             station.InitialObsevations.forEach(OP => {
-                                if(OP.name === "no2")
+                                if (OP.name === "no2")
                                     parameter ['no2'] = OP.value
                             })
                             break
                         case 'o3':
                             station.InitialObsevations.forEach(OP => {
-                                if(OP.name === "o3")
+                                if (OP.name === "o3")
                                     parameter ['o3'] = OP.value
                             })
                             break
                         default:
                             station.InitialObsevations.forEach(OP => {
-                                if(OP.name === "co")
+                                if (OP.name === "co")
                                     parameter ['co'] = OP.value
                             })
                             break
@@ -286,7 +306,6 @@ function nullInfo(varName) {
 
                 }
             })
-
 
             const updatedJson = jsonUpdator(parameter)
             uploadToSTA(updatedJson)
