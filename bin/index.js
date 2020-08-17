@@ -69,25 +69,25 @@ const options = yargs
         alias: "SO2Observation",
         describe: "Do you like adding SO2 as an observation?",
         type: "boolean",
-        default: false
+        default: true
     })
     .option("no2", {
         alias: "NO2Observation",
         describe: "Do you like adding NO2 as an observation?",
         type: "boolean",
-        default: false
+        default: true
     })
     .option("o3", {
         alias: "O3Observation",
         describe: "Do you like adding O3 as an observation?",
         type: "boolean",
-        default: false
+        default: true
     })
     .option("co", {
         alias: "COObservation",
         describe: "Do you like adding CO as an observation?",
         type: "boolean",
-        default: false
+        default: true
     })
 
     .option("wpm25", {

@@ -24,7 +24,7 @@ module.exports = function jsonUpdator(newObservations) {
     let updatedArrayObservation = []
 
     if (newObservations.ThingName != null){
-        templateJson.common.Datastream.Thing.name = "T1 "+newObservations.ThingName;
+        templateJson.common.Datastream.Thing.name = "GeoCENS "+newObservations.ThingName;
         templateJson.common.Datastream.Thing.description = newObservations.ThingDescription;
     };
 
