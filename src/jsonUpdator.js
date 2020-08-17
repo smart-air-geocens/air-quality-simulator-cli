@@ -1,6 +1,5 @@
 module.exports = function jsonUpdator(newObservations) {
 
-
     let templateJson = {
         "common": {
             "Datastream": {
@@ -151,7 +150,7 @@ module.exports = function jsonUpdator(newObservations) {
             }
         );
     };
-/////
+
     if (newObservations.windSpeed != null){
 
         updatedArrayObservation.push(
@@ -463,8 +462,6 @@ module.exports = function jsonUpdator(newObservations) {
             }
         );
     };
-
-
 
     return {...templateJson , "Observations":updatedArrayObservation}
 }

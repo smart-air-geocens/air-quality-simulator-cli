@@ -22,25 +22,13 @@ const sigma2 = 0, alpha = 100;
 
 const options = yargs
     .usage("Usage: -n <name>")
-    // .option("n", { alias: "name", describe: "Your name", type: "string", demandOption: true })
     .option("n", {
         alias: "stationNumber",
         describe: "The number of close stations you want to consider close to each location",
         type: "number",
         default: 10
     })
-    // .option("m", {
-    //     alias: "monthNumber",
-    //     describe: "The number of months ago you want to consider to extract observations",
-    //     type: "number",
-    //     default: 1
-    // })
-    // .option("o", {
-    //     alias: "observationCount",
-    //     describe: "The number of observations you want consider within the date range",
-    //     type: "number",
-    //     default: 20
-    // })
+
     .option("model", {
         alias: "InterpolationTechnique",
         describe: "What interpolation technique do you want to apply?",

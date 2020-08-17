@@ -37,7 +37,6 @@ module.exports =  async function krigingPreparation(data,vgModel) {
             if(x.length > 2){
                 let variogram = await krigingTrain(z, x, y, model, sigma2, alpha);
                 predictedValue = await krigingPredict(station.properties.coordinates[0], station.properties.coordinates[1], variogram)
-                // console.log(station.name + "...." + key + "..." + predictedValue)
             }
 
             let returnedObject = {}
