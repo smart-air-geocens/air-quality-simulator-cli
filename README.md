@@ -216,7 +216,7 @@ To run the simulator, you will be asked to fill the following information:
 
 Please note that all the required information should be entered by the user and they cannot be left empty.
 
-Note: For the users convenience, all the required information can be set once. To this end, please create a ".env" file in the root directory of node cli application. Then, copy the following variables and replace their values with your own information:
+Note: For the users convenience, all the required information can be set once. To this end, please create a ".env" file like ".env.example" text file (Can be found in the root directory of the simulator) in the root directory of node cli application. Then, copy the following variables and replace their values with your own information:
 
 `USER_NAME = 'ABC'`
 

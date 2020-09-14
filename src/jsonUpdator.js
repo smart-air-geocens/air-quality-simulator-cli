@@ -1,6 +1,5 @@
 module.exports = function jsonUpdator(newObservations) {
 
-
     let templateJson = {
         "common": {
             "Datastream": {
@@ -24,7 +23,7 @@ module.exports = function jsonUpdator(newObservations) {
     let updatedArrayObservation = []
 
     if (newObservations.ThingName != null){
-        templateJson.common.Datastream.Thing.name = "T1 "+newObservations.ThingName;
+        templateJson.common.Datastream.Thing.name = "GeoCENS "+newObservations.ThingName;
         templateJson.common.Datastream.Thing.description = newObservations.ThingDescription;
     };
 
@@ -151,7 +150,7 @@ module.exports = function jsonUpdator(newObservations) {
             }
         );
     };
-/////
+
     if (newObservations.windSpeed != null){
 
         updatedArrayObservation.push(
@@ -463,8 +462,6 @@ module.exports = function jsonUpdator(newObservations) {
             }
         );
     };
-
-
 
     return {...templateJson , "Observations":updatedArrayObservation}
 }

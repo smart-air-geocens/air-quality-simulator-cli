@@ -1,6 +1,6 @@
 {
   "name": "@smart-air-geocens/air-quality-simulator-cli",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A air quality simulator CLI for the Smart Air (GeoCENS) project.",
   "main": "bin/index.js",
   "scripts": {

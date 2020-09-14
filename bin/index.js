@@ -22,25 +22,13 @@ const sigma2 = 0, alpha = 100;
 
 const options = yargs
     .usage("Usage: -n <name>")
-    // .option("n", { alias: "name", describe: "Your name", type: "string", demandOption: true })
     .option("n", {
         alias: "stationNumber",
         describe: "The number of close stations you want to consider close to each location",
         type: "number",
         default: 10
     })
-    // .option("m", {
-    //     alias: "monthNumber",
-    //     describe: "The number of months ago you want to consider to extract observations",
-    //     type: "number",
-    //     default: 1
-    // })
-    // .option("o", {
-    //     alias: "observationCount",
-    //     describe: "The number of observations you want consider within the date range",
-    //     type: "number",
-    //     default: 20
-    // })
+
     .option("model", {
         alias: "InterpolationTechnique",
         describe: "What interpolation technique do you want to apply?",
@@ -69,25 +57,25 @@ const options = yargs
         alias: "SO2Observation",
         describe: "Do you like adding SO2 as an observation?",
         type: "boolean",
-        default: false
+        default: true
     })
     .option("no2", {
         alias: "NO2Observation",
         describe: "Do you like adding NO2 as an observation?",
         type: "boolean",
-        default: false
+        default: true
     })
     .option("o3", {
         alias: "O3Observation",
         describe: "Do you like adding O3 as an observation?",
         type: "boolean",
-        default: false
+        default: true
     })
     .option("co", {
         alias: "COObservation",
         describe: "Do you like adding CO as an observation?",
         type: "boolean",
-        default: false
+        default: true
     })
 
     .option("wpm25", {

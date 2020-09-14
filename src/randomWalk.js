@@ -12,12 +12,9 @@ module.exports = function randomWalk(inputJSON,requiredOPs,walkingStepTemperatur
 
         return null
 
-        // return {...station, 'InitialObsevations':updatedAirQualityObservations}
-
     })
 
     return inputJSON
-    // return {...inputJSON,"targetStations":updatedObservations}
 
 }
 

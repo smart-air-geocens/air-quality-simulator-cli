@@ -36,12 +36,11 @@ module.exports = async function latestObservations(json, monthNumber, observatio
         }))
 
         return null
-        //
+
     }))
-    // const addedData = {...json, "targetStations": promises}
-    //
+
     console.log("Observations are successfully extracted")
-    //
+
     return json
 }
 
